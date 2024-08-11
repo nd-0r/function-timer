@@ -119,7 +119,6 @@
 //! }
 //! ```
 pub use function_timer_macro::time;
-use metrics::histogram;
 use std::time::Instant;
 
 /// Timer.
@@ -157,11 +156,18 @@ impl Drop for FunctionTimer {
     /// Get execution time and call [`histogram!`](histogram).
     fn drop(&mut self) {
         let d = self.chrono.elapsed();
-        let histogram = if let Some(struct_name) = self.struct_name {
-            histogram!(self.metric_name,  "struct" => struct_name, "function" => self.function)
+        let secs = d.as_secs();
+        let millis = d.subsec_millis();
+        if let Some(struct_name) = self.struct_name {
+            println!(
+                "{}    {}::{}    {}.{}",
+                self.metric_name, struct_name, self.function, secs, millis
+            );
         } else {
-            histogram!(self.metric_name,  "function" => self.function)
-        };
-        histogram.record(d);
+            println!(
+                "{}    {}    {}.{}",
+                self.metric_name, self.function, secs, millis
+            );
+        }
     }
 }

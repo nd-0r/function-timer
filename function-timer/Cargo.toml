@@ -15,30 +15,6 @@ keywords = ["macro", "metrics", "instrument"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[[test]]
-name = "test_time_function"
-
-[[test]]
-name = "test_time_struct"
-
-[[test]]
-name = "test_time_ident"
-
-[[test]]
-name = "test_time_fail"
-
-[[test]]
-name = "test_time_disable"
-
-[[test]]
-name = "test_async_function"
-
 [dependencies]
 function-timer-macro = { version = "0.6", path = "../function-timer-macro" }
-metrics = "0.23"
 
-[dev-dependencies]
-trybuild = "1.0"
-metrics-util = "0.17"
-metrics-exporter-prometheus = { version = "0.15", default-features = false }
-futures-test = "0.3"
